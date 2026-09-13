@@ -1,0 +1,12 @@
+# Build-script approvals (pnpm 10.26+). Packages not listed here fail the
+# install under the default strictDepBuilds. Keep in sync when adding
+# native/postinstall dependencies. `pnpm approve-builds` edits this map.
+allowBuilds:
+  '@apollo/protobufjs': true
+  '@scarf/scarf': true
+  '@suites/di.nestjs': true
+  '@suites/doubles.vitest': true
+  '@swc/core': true
+  argon2: true
+  bcrypt: true
+  msgpackr-extract: true
