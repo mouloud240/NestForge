@@ -1,5 +1,5 @@
-import { UploadFile } from 'src/infrastructure/upload/types/upload-file.type';
-import { UploadOptions } from 'src/infrastructure/upload/types/upload-options.type';
+import { UploadFile } from '../../../upload/types/upload-file.type.js';
+import { UploadOptions } from '../../../upload/types/upload-options.type.js';
 
 export class UploadJobDto {
   file: UploadFile;

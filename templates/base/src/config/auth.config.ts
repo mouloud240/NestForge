@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config';
-import { AuthConfig } from './interfaces/auth-config.interface';
+import { AuthConfig } from './interfaces/auth-config.interface.js';
 
 export default registerAs(
   'auth',

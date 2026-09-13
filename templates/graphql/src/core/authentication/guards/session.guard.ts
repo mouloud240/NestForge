@@ -5,8 +5,8 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { SessionRequest } from '../types/session-request.type';
-import { UserService } from 'src/core/user/v1/user.service';
+import { SessionRequest } from '../types/session-request.type.js';
+import { UserService } from '../../../../../base/src/core/user/v1/user.service.js';
 
 @Injectable()
 export class SessionAuthGuard implements CanActivate {

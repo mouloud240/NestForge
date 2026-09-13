@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
-import { registerDto } from 'src/core/authentication/v1/dtos/requests/register.dto';
-import { User } from '../entities/user.entity';
+import { registerDto } from '../../authentication/v1/dtos/requests/register.dto.js';
+import { User } from '../entities/user.entity.js';
 import {
   OAuthUserData,
   UserRepositoryInterface,
-} from './user.respository-interface';
+} from './user.respository-interface.js';
 
 @Injectable()
 export class NoopUserRepository implements UserRepositoryInterface {

@@ -1,5 +1,5 @@
-import { registerDto } from 'src/core/authentication/v1/dtos/requests/register.dto';
-import { User } from '../entities/user.entity';
+import { registerDto } from '../../authentication/v1/dtos/requests/register.dto.js';
+import { User } from '../entities/user.entity.js';
 
 export const USER_REPOSITORY = Symbol('USER_REPOSITORY');
 

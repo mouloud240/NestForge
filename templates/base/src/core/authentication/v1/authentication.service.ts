@@ -9,22 +9,22 @@ import {
 import {
   compareHash,
   generateHash,
-} from 'src/common/utils/authentication/hash.utils';
-import { AuthResponseDto } from './dtos/responses/auth-response.dto';
-import { MessageResponseDto } from './dtos/responses/message-response.dto';
-import { registerDto } from './dtos/requests/register.dto';
-import { ConfigType } from '@nestjs/config';
+} from '../../../common/utils/authentication/hash.utils.js';
+import { AuthResponseDto } from './dtos/responses/auth-response.dto.js';
+import { MessageResponseDto } from './dtos/responses/message-response.dto.js';
+import { registerDto } from './dtos/requests/register.dto.js';
+import type { ConfigType } from '@nestjs/config';
 import { RedisService } from 'nestjs-redis-client';
 import { InjectQueue } from '@nestjs/bullmq';
-import { QUEUE_NAME } from 'src/common/constants/queues';
+import { QUEUE_NAME } from '../../../common/constants/queues.js';
 import { Queue } from 'bullmq';
-import { MAIL_JOBS } from 'src/common/constants/jobs';
+import { MAIL_JOBS } from '../../../common/constants/jobs.js';
 import { v4 as uuidv4 } from 'uuid';
-import authConfig from 'src/config/auth.config';
-import { OAuthProfile } from '../oauth/oauth-providers';
-import { UserService } from 'src/core/user/v1/user.service';
-import { User } from 'src/core/user/entities/user.entity';
-import { SessionRequest } from '../types/session-request.type';
+import authConfig from '../../../config/auth.config.js';
+import { OAuthProfile } from '../oauth/oauth-providers.js';
+import { UserService } from '../../user/v1/user.service.js';
+import { User } from '../../user/entities/user.entity.js';
+import { SessionRequest } from '../types/session-request.type.js';
 
 @Injectable()
 export class AuthenticationService {

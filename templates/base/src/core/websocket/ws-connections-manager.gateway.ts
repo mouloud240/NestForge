@@ -9,9 +9,9 @@ import { ConfigService } from '@nestjs/config';
 import { parse } from 'cookie';
 import { Server, Socket } from 'socket.io';
 import { RedisService } from 'nestjs-redis-client';
-import { User } from '../user/entities/user.entity';
-import { UserService } from '../user/v1/user.service';
-import { AuthConfig } from 'src/config/interfaces/auth-config.interface';
+import { User } from '../user/entities/user.entity.js';
+import { UserService } from '../user/v1/user.service.js';
+import { AuthConfig } from '../../config/interfaces/auth-config.interface.js';
 
 @WebSocketGateway()
 export class WsConnectionsManagerGateway

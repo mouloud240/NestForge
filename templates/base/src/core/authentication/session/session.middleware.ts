@@ -3,7 +3,7 @@ import session from 'express-session';
 import { RedisStore } from 'connect-redis';
 import { ConfigService } from '@nestjs/config';
 import { RedisService } from 'nestjs-redis-client';
-import { AuthConfig } from 'src/config/interfaces/auth-config.interface';
+import { AuthConfig } from '../../../config/interfaces/auth-config.interface.js';
 
 export function createSessionMiddleware(
   configService: ConfigService,

@@ -1,6 +1,6 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { SessionRequest } from '../types/session-request.type';
+import { SessionRequest } from '../types/session-request.type.js';
 
 export const CurrentUser = createParamDecorator(
   (data: keyof SessionRequest['user'] | undefined, ctx: ExecutionContext) => {

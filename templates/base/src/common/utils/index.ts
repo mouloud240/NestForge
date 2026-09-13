@@ -1,4 +1,4 @@
-export * from './json.utils';
+export * from './json.utils.js';
 
-export * from './query.utils';
+export * from './query.utils.js';
 //TODO fill those later

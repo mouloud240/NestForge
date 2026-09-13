@@ -5,7 +5,7 @@ import {
   IsString,
   IsStrongPassword,
 } from 'class-validator';
-import { Match } from '../../v1/dtos/requests/Match.decorator';
+import { Match } from '../../v1/dtos/requests/Match.decorator.js';
 
 /**
  * Input type for register mutation

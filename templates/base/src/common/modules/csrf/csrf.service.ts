@@ -6,7 +6,7 @@ import {
   DoubleCsrfUtilities,
 } from 'csrf-csrf';
 import { Request, Response } from 'express';
-import { SessionRequest } from '../../../core/authentication/types/session-request.type';
+import { SessionRequest } from '../../../core/authentication/types/session-request.type.js';
 
 @Injectable()
 export class CsrfService {
@@ -17,7 +17,7 @@ export class CsrfService {
 
     const opts: DoubleCsrfConfigOptions = {
       getSecret: () => authConfig?.csrf?.secret ?? 'defaultCsrfSecret',
-      getSessionIdentifier: (req: SessionRequest) => req.sessionID,
+      getSessionIdentifier: (req: Request) => (req as SessionRequest).sessionID,
       cookieName: authConfig?.csrf?.cookieName ?? 'psifi.x-csrf-token',
       cookieOptions: {
         sameSite: 'lax',

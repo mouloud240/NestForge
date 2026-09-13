@@ -1,7 +1,7 @@
 import { TestBed } from '@suites/unit';
-import type { Mocked } from '@suites/doubles.jest';
+import type { Mocked } from '@suites/doubles.vitest';
 import { MailerService } from '@nestjs-modules/mailer';
-import { EmailService } from './email.service';
+import { EmailService } from './email.service.js';
 
 describe('EmailService', () => {
   let service: EmailService;

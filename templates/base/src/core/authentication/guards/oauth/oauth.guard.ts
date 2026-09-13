@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { OAuthStrategyRegistry } from '../../oauth/oauth-strategy.registry';
+import { OAuthStrategyRegistry } from '../../oauth/oauth-strategy.registry.js';
 
 export function OAuthGuard(provider: string) {
   @Injectable()

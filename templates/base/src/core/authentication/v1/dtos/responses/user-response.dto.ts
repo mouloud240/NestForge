@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { User } from 'src/core/user/entities/user.entity';
+import { User } from '../../../../user/entities/user.entity.js';
 
 export class UserResponseDto {
   @ApiProperty({ description: 'User unique identifier' })

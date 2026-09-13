@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import DataLoader from 'dataloader';
-import { UserService } from '../../../core/user/v1/user.service';
-import { User } from '../../../core/user/entities/user.entity';
+import { UserService } from '../../../core/user/v1/user.service.js';
+import { User } from '../../../core/user/entities/user.entity.js';
 
 /**
  * DataLoader for User entity to solve N+1 query problem

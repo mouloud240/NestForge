@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AsyncLocalStorage } from 'async_hooks';
-import { ASYNC_STORAGE } from 'src/common/constants/injection';
+import { ASYNC_STORAGE } from '../../constants/injection.js';
 
 @Module({
   providers: [

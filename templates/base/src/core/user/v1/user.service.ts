@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { registerDto } from 'src/core/authentication/v1/dtos/requests/register.dto';
-import { User } from '../entities/user.entity';
-import {
+import { registerDto } from '../../authentication/v1/dtos/requests/register.dto.js';
+import { User } from '../entities/user.entity.js';
+import { USER_REPOSITORY } from '../repository/user.respository-interface.js';
+import type {
   OAuthUserData,
-  USER_REPOSITORY,
   UserRepositoryInterface,
-} from '../repository/user.respository-interface';
+} from '../repository/user.respository-interface.js';
 @Injectable()
 export class UserService {
   constructor(

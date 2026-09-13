@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
-import { LocalStrategy } from './strategies/local.strategy';
-import { LocalGuard } from './guards/local.guard';
-import { UserModule } from '../user/user.module';
-import { AuthenticationController } from './v1/authentication.controller';
-import { AuthenticationService } from './v1/authentication.service';
-import { SessionAuthGuard } from './guards/session.guard';
-import { CsrfModule } from '../../common/modules/csrf/csrf.module';
-import { OAuthStrategyRegistry } from './oauth/oauth-strategy.registry';
+import { LocalStrategy } from './strategies/local.strategy.js';
+import { LocalGuard } from './guards/local.guard.js';
+import { UserModule } from '../user/user.module.js';
+import { AuthenticationController } from './v1/authentication.controller.js';
+import { AuthenticationService } from './v1/authentication.service.js';
+import { SessionAuthGuard } from './guards/session.guard.js';
+import { CsrfModule } from '../../common/modules/csrf/csrf.module.js';
+import { OAuthStrategyRegistry } from './oauth/oauth-strategy.registry.js';
 
 @Module({
   imports: [PassportModule, UserModule, CsrfModule],

@@ -1,13 +1,13 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
-import { UserService } from './v1/user.service';
-import { UserType } from '../authentication/graphql/types/user.type';
-import { UpdateProfileInput } from '../authentication/graphql/inputs/update-profile.input';
-import { MessageResponseType } from '../authentication/graphql/types/message-response.type';
-import { SessionAuthGuard } from '../authentication/guards/session.guard';
-import { CurrentUser } from '../authentication/decorators/current-user.decorator';
-import { User } from './entities/user.entity';
-import { SessionRequest } from '../authentication/types/session-request.type';
+import { UserService } from './v1/user.service.js';
+import { UserType } from '../authentication/graphql/types/user.type.js';
+import { UpdateProfileInput } from '../authentication/graphql/inputs/update-profile.input.js';
+import { MessageResponseType } from '../authentication/graphql/types/message-response.type.js';
+import { SessionAuthGuard } from '../authentication/guards/session.guard.js';
+import { CurrentUser } from '../authentication/decorators/current-user.decorator.js';
+import { User } from './entities/user.entity.js';
+import { SessionRequest } from '../authentication/types/session-request.type.js';
 
 /**
  * GraphQL resolver for user operations

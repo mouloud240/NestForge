@@ -1,6 +1,13 @@
 /* oxlint-disable */
 import { globSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
+
+// TODO: replace createRequire with async import() + pathToFileURL (pure ESM);
+// kept sync so queue.module.ts providers don't change in this migration.
+const require = createRequire(import.meta.url);
+
+const __dirname = import.meta.dirname;
 
 /**
  * Load all BullMQ processor classes declared under the queue directory.
@@ -11,7 +18,7 @@ import { resolve } from 'node:path';
  * unintended providers.
  */
 export function loadProcessors(): any[] {
-  const extension = __filename.endsWith('.ts') ? 'ts' : 'js';
+  const extension = import.meta.filename.endsWith('.ts') ? 'ts' : 'js';
   const files = globSync(`**/*.processor.${extension}`, {
     cwd: __dirname,
   });

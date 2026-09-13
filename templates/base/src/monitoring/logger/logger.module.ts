@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AlsModule } from 'src/common/modules/async_storage/als.module';
-import { LoggerServiceBuilder } from './logger.service';
+import { AlsModule } from '../../common/modules/async_storage/als.module.js';
+import { LoggerServiceBuilder } from './logger.service.js';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { LoggerInterceptor } from './logger.interceptor';
+import { LoggerInterceptor } from './logger.interceptor.js';
 
 @Module({
   imports: [AlsModule],

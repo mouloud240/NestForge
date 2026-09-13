@@ -8,8 +8,8 @@ import {
 import { Request, Response } from 'express';
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { Observable, tap } from 'rxjs';
-import { LoggerStore } from './interfaces/logger_store.interface';
-import { ASYNC_STORAGE } from 'src/common/constants/injection';
+import { LoggerStore } from './interfaces/logger_store.interface.js';
+import { ASYNC_STORAGE } from '../../common/constants/injection.js';
 
 export class LoggerInterceptor implements NestInterceptor {
   constructor(

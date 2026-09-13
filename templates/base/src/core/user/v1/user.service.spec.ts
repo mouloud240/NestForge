@@ -1,11 +1,11 @@
 import { TestBed } from '@suites/unit';
-import type { Mocked } from '@suites/doubles.jest';
-import { UserService } from './user.service';
+import type { Mocked } from '@suites/doubles.vitest';
+import { UserService } from './user.service.js';
 import {
   USER_REPOSITORY,
   type UserRepositoryInterface,
-} from '../repository/user.respository-interface';
-import { User } from '../entities/user.entity';
+} from '../repository/user.respository-interface.js';
+import { User } from '../entities/user.entity.js';
 
 describe('UserService', () => {
   let service: UserService;

@@ -1,11 +1,11 @@
 import { BullModule } from '@nestjs/bullmq';
 import { DynamicModule, Global, Module } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-import { QUEUE_NAME } from 'src/common/constants/queues';
-import redisConfig from 'src/config/redis.config';
-import { UploadModule } from '../upload/upload.module';
-import { EmailModule } from 'src/common/modules/email/email.module';
-import { loadProcessors } from './processor.loader';
+import { QUEUE_NAME } from '../../common/constants/queues.js';
+import redisConfig from '../../config/redis.config.js';
+import { UploadModule } from '../upload/upload.module.js';
+import { EmailModule } from '../../common/modules/email/email.module.js';
+import { loadProcessors } from './processor.loader.js';
 
 @Global()
 @Module({})

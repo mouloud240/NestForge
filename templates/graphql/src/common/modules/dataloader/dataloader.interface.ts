@@ -1,5 +1,5 @@
 import DataLoader from 'dataloader';
-import { User } from '../../../core/user/entities/user.entity';
+import { User } from '../../../core/user/entities/user.entity.js';
 
 /**
  * Interface for all DataLoaders available in GraphQL context

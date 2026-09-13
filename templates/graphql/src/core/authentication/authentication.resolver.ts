@@ -1,16 +1,16 @@
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
-import { AuthenticationService } from './v1/authentication.service';
-import { AuthResponseType } from './graphql/types/auth-response.type';
-import { MessageResponseType } from './graphql/types/message-response.type';
-import { RegisterInput } from './graphql/inputs/register.input';
-import { VerifyEmailInput } from './graphql/inputs/verify-email.input';
-import { ResetPasswordInput } from './graphql/inputs/reset-password.input';
-import { LocalGuard } from './guards/local.guard';
-import { SessionAuthGuard } from './guards/session.guard';
-import { CurrentUser } from './decorators/current-user.decorator';
-import { User } from '../user/entities/user.entity';
-import { SessionRequest } from './types/session-request.type';
+import { AuthenticationService } from './v1/authentication.service.js';
+import { AuthResponseType } from './graphql/types/auth-response.type.js';
+import { MessageResponseType } from './graphql/types/message-response.type.js';
+import { RegisterInput } from './graphql/inputs/register.input.js';
+import { VerifyEmailInput } from './graphql/inputs/verify-email.input.js';
+import { ResetPasswordInput } from './graphql/inputs/reset-password.input.js';
+import { LocalGuard } from './guards/local.guard.js';
+import { SessionAuthGuard } from './guards/session.guard.js';
+import { CurrentUser } from './decorators/current-user.decorator.js';
+import { User } from '../user/entities/user.entity.js';
+import { SessionRequest } from './types/session-request.type.js';
 
 /**
  * GraphQL resolver for authentication operations

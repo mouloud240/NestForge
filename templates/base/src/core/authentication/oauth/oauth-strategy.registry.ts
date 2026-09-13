@@ -1,9 +1,9 @@
 import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
+import type { ConfigType } from '@nestjs/config';
 import passport from 'passport';
-import authConfig from 'src/config/auth.config';
-import { AuthenticationService } from '../v1/authentication.service';
-import { OAuthProfile, OAUTH_PROVIDERS } from './oauth-providers';
+import authConfig from '../../../config/auth.config.js';
+import { AuthenticationService } from '../v1/authentication.service.js';
+import { OAuthProfile, OAUTH_PROVIDERS } from './oauth-providers.js';
 
 @Injectable()
 export class OAuthStrategyRegistry implements OnModuleInit {

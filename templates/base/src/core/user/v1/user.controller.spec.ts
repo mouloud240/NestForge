@@ -1,7 +1,7 @@
 import { TestBed } from '@suites/unit';
-import type { Mocked } from '@suites/doubles.jest';
-import { UserController } from './user.controller';
-import { UserService } from './user.service';
+import type { Mocked } from '@suites/doubles.vitest';
+import { UserController } from './user.controller.js';
+import { UserService } from './user.service.js';
 
 describe('UserController', () => {
   let controller: UserController;

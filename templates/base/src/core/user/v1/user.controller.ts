@@ -1,6 +1,6 @@
 import { Controller, UseGuards } from '@nestjs/common';
-import { UserService } from './user.service';
-import { SessionAuthGuard } from 'src/core/authentication/guards/session.guard';
+import { UserService } from './user.service.js';
+import { SessionAuthGuard } from '../../authentication/guards/session.guard.js';
 
 @Controller('user')
 @UseGuards(SessionAuthGuard)

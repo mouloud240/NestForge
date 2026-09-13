@@ -1,8 +1,8 @@
 import { Injectable, NotImplementedException } from '@nestjs/common';
-import { IUploadService } from './upload-service.interface';
-import { UploadFile } from './types/upload-file.type';
-import { UploadOptions } from './types/upload-options.type';
-import { UploadResult } from './types/upload-result.type';
+import { IUploadService } from './upload-service.interface.js';
+import { UploadFile } from './types/upload-file.type.js';
+import { UploadOptions } from './types/upload-options.type.js';
+import { UploadResult } from './types/upload-result.type.js';
 
 /**
  * Default upload implementation that intentionally throws.

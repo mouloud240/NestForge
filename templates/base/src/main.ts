@@ -6,14 +6,14 @@ import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import { ConfigService } from '@nestjs/config';
 import { RedisService } from 'nestjs-redis-client';
-import { AppModule } from './app.module';
-import { ResponseFormatterInterceptor } from './common/interceptors/response-formatter.interceptor';
-import { HttpExceptionFilter } from './common/filter/httpException.filter';
-import { LoggerServiceBuilder } from './monitoring/logger/logger.service';
-import { AppClusterService } from './infrastructure/clusters/app.clusterize';
-import { createSessionMiddleware } from './core/authentication/session/session.middleware';
-import { SessionRequest } from './core/authentication/types/session-request.type';
-import { CsrfService } from './common/modules/csrf/csrf.service';
+import { AppModule } from './app.module.js';
+import { ResponseFormatterInterceptor } from './common/interceptors/response-formatter.interceptor.js';
+import { HttpExceptionFilter } from './common/filter/httpException.filter.js';
+import { LoggerServiceBuilder } from './monitoring/logger/logger.service.js';
+import { AppClusterService } from './infrastructure/clusters/app.clusterize.js';
+import { createSessionMiddleware } from './core/authentication/session/session.middleware.js';
+import { SessionRequest } from './core/authentication/types/session-request.type.js';
+import { CsrfService } from './common/modules/csrf/csrf.service.js';
 
 async function bootstrap() {
   // the cors will be changed to the front end url  in production environnement
@@ -154,7 +154,7 @@ if (cluserizeApp) {
     await bootstrap();
   });
 } else {
-  bootstrap()
+  await bootstrap()
     .then(() => {
       console.log(
         `Application is running on: ${process.env.APP_URL || `http://localhost:${process.env.PORT || 3000}`}`,

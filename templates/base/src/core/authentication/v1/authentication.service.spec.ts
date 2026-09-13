@@ -1,24 +1,24 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getQueueToken } from '@nestjs/bullmq';
 import { BadRequestException } from '@nestjs/common';
-import { AuthenticationService } from './authentication.service';
-import { UserService } from 'src/core/user/v1/user.service';
+import { AuthenticationService } from './authentication.service.js';
+import { UserService } from '../../user/v1/user.service.js';
 import { RedisService } from 'nestjs-redis-client';
-import { QUEUE_NAME } from 'src/common/constants/queues';
-import { MAIL_JOBS } from 'src/common/constants/jobs';
-import authConfig from 'src/config/auth.config';
-import { User } from 'src/core/user/entities/user.entity';
-import { OAuthProfile } from '../oauth/oauth-providers';
+import { QUEUE_NAME } from '../../../common/constants/queues.js';
+import { MAIL_JOBS } from '../../../common/constants/jobs.js';
+import authConfig from '../../../config/auth.config.js';
+import { User } from '../../user/entities/user.entity.js';
+import { OAuthProfile } from '../oauth/oauth-providers.js';
 
 describe('AuthenticationService', () => {
   let service: AuthenticationService;
-  const createUser = jest.fn();
-  const findByEmail = jest.fn();
-  const createOAuthUser = jest.fn();
-  const mailAdd = jest.fn();
+  const createUser = vi.fn();
+  const findByEmail = vi.fn();
+  const createOAuthUser = vi.fn();
+  const mailAdd = vi.fn();
 
   beforeEach(async () => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthenticationService,
@@ -49,7 +49,7 @@ describe('AuthenticationService', () => {
         },
         {
           provide: RedisService,
-          useValue: { get: jest.fn(), set: jest.fn(), del: jest.fn() },
+          useValue: { get: vi.fn(), set: vi.fn(), del: vi.fn() },
         },
         {
           provide: getQueueToken(QUEUE_NAME.MAIL),

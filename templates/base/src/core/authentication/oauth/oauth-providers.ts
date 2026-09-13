@@ -1,5 +1,5 @@
 import { Strategy as GoogleStrategy, VerifyCallback } from 'passport-google-oauth20';
-import { AuthConfig } from 'src/config/interfaces/auth-config.interface';
+import { AuthConfig } from '../../../config/interfaces/auth-config.interface.js';
 
 export interface OAuthProfile {
   id: string;

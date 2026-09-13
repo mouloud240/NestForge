@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { UserType } from './user.type';
+import { UserType } from './user.type.js';
 
 /**
  * GraphQL response type for authentication operations

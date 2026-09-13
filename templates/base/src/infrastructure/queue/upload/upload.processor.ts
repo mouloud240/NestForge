@@ -1,11 +1,11 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
 import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Job } from 'bullmq';
-import { UPLOAD_JOBS } from 'src/common/constants/jobs';
-import { QUEUE_NAME } from 'src/common/constants/queues';
-import { IUploadService } from 'src/infrastructure/upload/upload-service.interface';
-import { UPLOAD_SERVICE } from 'src/infrastructure/upload/upload.constants';
-import { UploadJobDto } from './dto/upload-job.dto';
+import { UPLOAD_JOBS } from '../../../common/constants/jobs.js';
+import { QUEUE_NAME } from '../../../common/constants/queues.js';
+import type { IUploadService } from '../../upload/upload-service.interface.js';
+import { UPLOAD_SERVICE } from '../../upload/upload.constants.js';
+import { UploadJobDto } from './dto/upload-job.dto.js';
 
 @Processor(QUEUE_NAME.UPLOAD)
 export class UploadProcessor extends WorkerHost {

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { UserDataLoader } from './user.dataloader';
-import { UserModule } from '../../../core/user/user.module';
+import { UserDataLoader } from './user.dataloader.js';
+import { UserModule } from '../../../core/user/user.module.js';
 
 /**
  * DataLoader Module

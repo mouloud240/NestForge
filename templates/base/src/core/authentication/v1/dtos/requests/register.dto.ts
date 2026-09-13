@@ -5,7 +5,7 @@ import {
   IsString,
   IsStrongPassword,
 } from 'class-validator';
-import { Match } from './Match.decorator';
+import { Match } from './Match.decorator.js';
 
 export class registerDto {
   @IsString()

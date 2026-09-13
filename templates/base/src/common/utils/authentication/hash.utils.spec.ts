@@ -1,7 +1,7 @@
 import {
   compareHash,
   generateHash,
-} from './hash.utils';
+} from './hash.utils.js';
 
 describe('hash.utils', () => {
   describe('generateHash', () => {

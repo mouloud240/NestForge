@@ -8,20 +8,20 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { Response } from 'express';
-import { AuthenticationService } from './authentication.service';
-import { registerDto } from './dtos/requests/register.dto';
+import type { Response } from 'express';
+import { AuthenticationService } from './authentication.service.js';
+import { registerDto } from './dtos/requests/register.dto.js';
 import { ApiBody, ApiOkResponse, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { AuthResponseDto } from './dtos/responses/auth-response.dto';
-import { CsrfTokenDto } from './dtos/responses/csrf-token.dto';
-import { LocalGuard } from '../guards/local.guard';
-import { CurrentUser } from '../decorators/current-user.decorator';
-import { User } from 'src/core/user/entities/user.entity';
-import { SessionAuthGuard } from '../guards/session.guard';
-import { OAuthGuard } from '../guards/oauth/oauth.guard';
-import { SessionRequest } from '../types/session-request.type';
-import { CsrfService } from '../../../common/modules/csrf/csrf.service';
-import { LoginDto } from './dtos/requests/login.dto';
+import { AuthResponseDto } from './dtos/responses/auth-response.dto.js';
+import { CsrfTokenDto } from './dtos/responses/csrf-token.dto.js';
+import { LocalGuard } from '../guards/local.guard.js';
+import { CurrentUser } from '../decorators/current-user.decorator.js';
+import type { User } from '../../user/entities/user.entity.js';
+import { SessionAuthGuard } from '../guards/session.guard.js';
+import { OAuthGuard } from '../guards/oauth/oauth.guard.js';
+import type { SessionRequest } from '../types/session-request.type.js';
+import { CsrfService } from '../../../common/modules/csrf/csrf.service.js';
+import { LoginDto } from './dtos/requests/login.dto.js';
 
 @Controller('authentication')
 export class AuthenticationController {

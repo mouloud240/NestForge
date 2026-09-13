@@ -1,10 +1,10 @@
 import { BadRequestException } from '@nestjs/common';
 import { ArgumentsHost } from '@nestjs/common';
-import { HttpExceptionFilter } from './httpException.filter';
+import { HttpExceptionFilter } from './httpException.filter.js';
 
 function mockHost(_exception: BadRequestException) {
-  const json = jest.fn();
-  const response = { status: jest.fn().mockReturnValue({ json }) };
+  const json = vi.fn();
+  const response = { status: vi.fn().mockReturnValue({ json }) };
   return {
     json,
     host: {

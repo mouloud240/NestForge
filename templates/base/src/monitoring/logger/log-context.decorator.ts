@@ -29,7 +29,7 @@ export function LogContext(options: LogContextOptions = {}) {
       // 1. Locate or Create Logger
       // Most services have `private readonly logger = new Logger(...)`
       // We cast to any to access private properties
-      const logger = this.logger || new Logger(target.constructor.name);
+      const logger = (this as any).logger || new Logger(target.constructor.name);
 
       const methodId = options.description || propertyKey;
       const successLevel = options.level || 'log';
