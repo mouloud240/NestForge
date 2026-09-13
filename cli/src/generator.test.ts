@@ -39,6 +39,9 @@ describe('createProject', () => {
     expect(existsSync(join(targetDir, 'src', 'main.ts'))).toBe(true);
     const pkg = JSON.parse(readFileSync(join(targetDir, 'package.json'), 'utf8'));
     expect(pkg.name).toBe('rest-app');
+    expect(pkg.type).toBe('module');
+    expect(existsSync(join(targetDir, 'vitest.config.ts'))).toBe(true);
+    expect(existsSync(join(targetDir, 'test', 'jest-e2e.json'))).toBe(false);
   });
 
   it('scaffolds a graphql project with merged dependencies', async () => {
@@ -56,6 +59,7 @@ describe('createProject', () => {
     const pkg = JSON.parse(readFileSync(join(targetDir, 'package.json'), 'utf8'));
     expect(pkg.name).toBe('gql-app');
     expect(pkg.dependencies).toHaveProperty('@nestjs/graphql');
+    expect(pkg.type).toBe('module');
   });
 
   it('throws when target directory already exists', async () => {
