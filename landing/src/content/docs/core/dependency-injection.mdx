@@ -69,4 +69,4 @@ Use a concrete class when the behavior is stable and unlikely to change, such as
 
 ## Testing with fakes
 
-Because services depend on interfaces, unit tests can provide a fake repository instead of a real database. The existing tests use `TestBed.solitary` from Suites and fake doubles from `@suites/doubles.jest`. This keeps tests fast and focused on the service logic, not the database.
+Because services depend on interfaces, unit tests can provide a fake repository instead of a real database. The existing tests use `TestBed.solitary` from Suites and fake doubles from `@suites/doubles.vitest`. This keeps tests fast and focused on the service logic, not the database.
