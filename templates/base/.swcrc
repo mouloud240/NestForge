@@ -1,0 +1,22 @@
+{
+  "$schema": "https://swc.rs/docs/configuration/swcrc",
+  "module": {
+    "type": "es6"
+  },
+  "jsc": {
+    "target": "es2023",
+    "parser": {
+      "syntax": "typescript",
+      "decorators": true,
+      "dynamicImport": true
+    },
+    "transform": {
+      "legacyDecorator": true,
+      "decoratorMetadata": true,
+      "useDefineForClassFields": false
+    },
+    "keepClassNames": true
+  },
+  "sourceMaps": true,
+  "minify": false
+}
