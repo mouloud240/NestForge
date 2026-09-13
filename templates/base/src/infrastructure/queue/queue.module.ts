@@ -5,14 +5,13 @@ import { QUEUE_NAME } from '../../common/constants/queues.js';
 import redisConfig from '../../config/redis.config.js';
 import { UploadModule } from '../upload/upload.module.js';
 import { EmailModule } from '../../common/modules/email/email.module.js';
-import { loadProcessors } from './processor.loader.js';
+import { MailProcessor } from './mail/mail.processor.js';
+import { UploadProcessor } from './upload/upload.processor.js';
 
 @Global()
 @Module({})
 export class QueueModule {
   static register(): DynamicModule {
-    const processors = loadProcessors();
-
     return {
       module: QueueModule,
       imports: [
@@ -40,7 +39,7 @@ export class QueueModule {
         UploadModule,
         EmailModule,
       ],
-      providers: processors,
+      providers: [MailProcessor, UploadProcessor],
       exports: [BullModule],
     };
   }

@@ -10,7 +10,8 @@ import { CsrfModule } from '../../common/modules/csrf/csrf.module.js';
 import { OAuthStrategyRegistry } from './oauth/oauth-strategy.registry.js';
 
 @Module({
-  imports: [PassportModule, UserModule, CsrfModule],
+  // .register provides AuthModuleOptions (required by passport v12 guard DI)
+  imports: [PassportModule.register({}), UserModule, CsrfModule],
   controllers: [AuthenticationController],
   providers: [
     AuthenticationService,

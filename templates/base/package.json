@@ -82,7 +82,7 @@
     "@types/express": "^5.0.0",
     "@types/express-session": "^1.18.2",
     "@types/lodash": "^4.17.17",
-    "@types/node": "^22.10.7",
+    "@types/node": "^24.0.0",
     "@types/passport": "^1.0.17",
     "@types/passport-google-oauth20": "^2.0.16",
     "@types/passport-local": "^1.0.38",
