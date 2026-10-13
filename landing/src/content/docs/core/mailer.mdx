@@ -1,30 +1,46 @@
 ---
 title: Mailer
-description: How emails are sent via the mail queue and Handlebars templates.
+description: How emails are sent via the mail queue and HTML templates.
 ---
 
-The project uses `@nestjs-modules/mailer` with Handlebars templates. Emails are sent from the `EmailService`, which is called by the mail queue processor.
+The project uses `@nestjs/mail` with HTML templates. Emails are sent from the `EmailService`, which is called by the mail queue processor.
 
 ## Configuration
 
-`mail.config.ts` registers the mailer asynchronously. It reads SMTP settings from the environment and points the template adapter at `src/common/modules/email/templates/`.
+`mail.config.ts` holds the sender and transport selection. `EmailModule` registers the global `MailModule` asynchronously: the factory builds the transport from the config, points the `FileTemplateEngine` at `src/common/modules/email/templates/`, and fails at startup on a bad `MAIL_TRANSPORT` or missing credentials.
 
-```typescript title="src/config/mail.config.ts"
-MailerModule.forRootAsync(mailConfig.asProvider())
+```typescript title="src/common/modules/email/email.module.ts"
+MailModule.forRootAsync({
+  inject: [mailConfig.KEY],
+  useFactory: (config) => ({
+    transport: mailTransport(config),
+    templates: new FileTemplateEngine({
+      dir: join(import.meta.dirname, 'templates'),
+      cache: process.env.NODE_ENV === 'production',
+    }),
+    from: config.from,
+  }),
+})
 ```
+
+The transport is picked by `MAIL_TRANSPORT`:
+
+- `file` (default) — writes each mail to an `.eml` file under `MAIL_DIRECTORY` (`var/mail`) instead of sending it. For development.
+- `smtp` — sends via `SMTP_URL` (e.g. `smtp://user:password@smtp.example.com:587`) with pooled connections.
+- `resend` — sends via the Resend API with `RESEND_API_KEY`.
 
 ## Templates
 
-The starter includes two Handlebars templates:
+The starter includes two HTML templates:
 
-- `verification.hbs` — Renders the email verification OTP code.
-- `password-reset.hbs` — Renders the password reset token.
+- `verification.html` — Renders the email verification OTP code.
+- `password-reset.html` — Renders the password reset token.
 
-Place new templates in the same folder and reference them by relative path when calling `sendMail`.
+Values go between double braces and are HTML-escaped. Place new templates in the same folder and reference them by name from a mail class. Templates are shipped to `dist` via the `*.html` asset entry in `nest-cli.json`.
 
-## EmailService
+## Mail classes and EmailService
 
-`EmailService` wraps `MailerService` and provides three methods:
+Each mail is a typed `Mailable` provider (`VerificationMail`, `PasswordResetMail`, `GenericMail`) whose `render()` returns the subject plus the template name and its context. `EmailService` sends them through the global `Mailer` and keeps the same three methods:
 
 ```typescript
 await this.emailService.sendEmail(to, subject, body);
@@ -32,14 +48,29 @@ await this.emailService.sendVerificationEmail(to, code);
 await this.emailService.sendPasswordResetEmail(to, token);
 ```
 
-It logs success and errors. If the mailer throws, the error is logged but the queue processor's retry logic is what ultimately decides whether the job is retried.
+It logs success and errors. If the mailer throws, the error propagates and the queue processor's retry logic decides whether the job is retried.
 
-## Adding a new template
+## Adding a new mail
 
-1. Create a new `.hbs` file under `src/common/modules/email/templates/`.
-2. Add a method in `EmailService` that calls `sendMail` with the template name and context.
-3. Add a new job name and processor handler if the email is sent via the queue.
+1. Create a new `.html` file under `src/common/modules/email/templates/`.
+2. Add a `Mailable` class whose `render()` returns the subject, template name, and context, and register it in `EmailModule`.
+3. Add a method in `EmailService` that calls `mailer.send` with the new class.
+4. Add a new job name and processor handler if the email is sent via the queue.
+
+## Testing
+
+Override the `MailTransport` with `InMemoryMailTransport` and read what was sent:
+
+```typescript
+const mailbox = new InMemoryMailTransport();
+await Test.createTestingModule({ imports: [AppModule] })
+  .overrideProvider(MailTransport)
+  .useValue(mailbox)
+  .compile();
+
+const mail = mailbox.assertSent({ to: 'ada@example.com', mail: VerificationMail });
+```
 
 ## Testing locally
 
-For local development, use a test SMTP service such as Mailpit, Mailtrap, or Ethereal. Set the SMTP credentials in `.env` and restart the app. The queue processor will pick up jobs and send them through the configured transport.
+With the default `file` transport, no SMTP setup is needed: place an order or register a user and open the `.eml` files in `var/mail` with any mail client. Set `MAIL_TRANSPORT=smtp` with a real `SMTP_URL` (or a test service such as Mailpit, Mailtrap, or Ethereal) when you want real delivery.

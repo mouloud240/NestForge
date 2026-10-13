@@ -44,11 +44,11 @@ Redis is required for sessions, rate limiting, queues, and WebSocket session res
 
 | Variable | Purpose | Example |
 | --- | --- | --- |
-| `MAIL_USER` | SMTP account | `you@gmail.com` |
-| `MAIL_PASS` | SMTP password or app password | `...` |
-| `MAIL_HOST` | SMTP server host | `smtp.gmail.com` |
-| `MAIL_PORT` | SMTP server port | `587` |
-| `MAIL_SECURE` | Use TLS | `true` or `false` |
+| `MAIL_TRANSPORT` | Which transport to use | `file`, `smtp`, or `resend` |
+| `MAIL_FROM` | Default sender address | `NestForge <no-reply@localhost>` |
+| `MAIL_DIRECTORY` | Where the `file` transport writes `.eml` files | `var/mail` |
+| `SMTP_URL` | SMTP server URL (when `MAIL_TRANSPORT=smtp`) | `smtp://user:password@smtp.gmail.com:587` |
+| `RESEND_API_KEY` | Resend API key (when `MAIL_TRANSPORT=resend`) | `re_...` |
 
 ## Authentication
 

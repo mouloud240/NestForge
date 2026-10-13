@@ -21,6 +21,9 @@ logs/
 # generated graphql schema
 schema.gql
 
+# local mail files written by the file mail transport
+var/
+
 # OS / editors
 .DS_Store
 .idea/

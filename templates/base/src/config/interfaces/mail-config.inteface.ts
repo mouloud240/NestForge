@@ -1,11 +1,9 @@
-import { MailerOptions } from '@nestjs-modules/mailer';
+export type MailTransportName = 'file' | 'smtp' | 'resend';
 
-export interface MailConfig extends MailerOptions {
-  template: {
-    dir: string;
-    adapter: any;
-    options: {
-      strict: boolean;
-    };
-  };
+export interface MailConfig {
+  from: string;
+  transport: MailTransportName;
+  directory: string;
+  smtpUrl?: string;
+  resendApiKey?: string;
 }

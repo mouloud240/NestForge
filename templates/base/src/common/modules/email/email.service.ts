@@ -1,66 +1,26 @@
-import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable, Logger } from '@nestjs/common';
+import { Mailer } from '@nestjs/mail';
+import { GenericMail } from './generic.mail.js';
+import { PasswordResetMail } from './password-reset.mail.js';
+import { VerificationMail } from './verification.mail.js';
 
 @Injectable()
 export class EmailService {
-  logger = new Logger(EmailService.name);
-  constructor(private readonly mailerService: MailerService) {}
-
-  private get isSmtpConfigured(): boolean {
-    const host = process.env.MAIL_HOST;
-    return host !== undefined && host !== '' && host !== 'smtp.example.com';
-  }
-
-  // ponytail: dev fallback so register->verify->login works without SMTP.
-  private shouldSkipSend(): boolean {
-    return !this.isSmtpConfigured && process.env.NODE_ENV !== 'test';
-  }
-
-  private devFallback(payload: string): void {
-    this.logger.log(
-      `[DEV MAILER] SMTP not configured, no email sent. Code/token: ${payload}`,
-    );
-  }
+  private readonly logger = new Logger(EmailService.name);
+  constructor(private readonly mailer: Mailer) {}
 
   async sendEmail(to: string, subject: string, body: string): Promise<void> {
-    if (this.shouldSkipSend()) {
-      return this.devFallback(body);
-    }
-    await this.mailerService.sendMail({
-      to: to,
-      subject: subject,
-      text: body,
-    });
+    await this.mailer.send(GenericMail, { to, data: { subject, body } });
     this.logger.log(`Email sent to ${to}`);
   }
 
   async sendVerificationEmail(to: string, code: string): Promise<void> {
-    if (this.shouldSkipSend()) {
-      return this.devFallback(code);
-    }
-    await this.mailerService.sendMail({
-      to,
-      subject: 'Email Verification',
-      template: './verification',
-      context: {
-        code,
-      },
-    });
+    await this.mailer.send(VerificationMail, { to, data: { code } });
     this.logger.log(`Verification email sent to ${to}`);
   }
 
   async sendPasswordResetEmail(to: string, token: string): Promise<void> {
-    if (this.shouldSkipSend()) {
-      return this.devFallback(token);
-    }
-    await this.mailerService.sendMail({
-      to,
-      subject: 'Password Reset',
-      template: './password-reset',
-      context: {
-        token,
-      },
-    });
+    await this.mailer.send(PasswordResetMail, { to, data: { token } });
     this.logger.log(`Password reset email sent to ${to}`);
   }
 }

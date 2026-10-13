@@ -44,7 +44,7 @@ Each feature uses a `v1/` subfolder so you can add new API versions without dele
 
 Shared building blocks used across features:
 
-- `modules/email/` — Mailer module with Handlebars templates.
+- `modules/email/` — Mailer module with HTML templates and typed mail classes.
 - `modules/async_storage/` — `AsyncLocalStorage` provider for request context.
 - `interceptors/response-formatter.interceptor.ts` — Wraps responses in a consistent envelope.
 - `filter/httpException.filter.ts` — Formats uncaught `HttpException` responses.

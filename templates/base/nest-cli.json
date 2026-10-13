@@ -8,9 +8,10 @@
     "deleteOutDir": true,
     "assets": [
       {
-        "include": "**/*.hbs",
+        "include": "**/*.html",
         "outDir": "dist"
       }
-    ]
+    ],
+    "watchAssets": true
   }
 }
