@@ -40,7 +40,56 @@ Values go between double braces and are HTML-escaped. Place new templates in the
 
 ## Mail classes and EmailService
 
-Each mail is a typed `Mailable` provider (`VerificationMail`, `PasswordResetMail`, `GenericMail`) whose `render()` returns the subject plus the template name and its context. `EmailService` sends them through the global `Mailer` and keeps the same three methods:
+Each mail is a typed `Mailable` provider. The class declares its data as an interface, and `render()` turns that data into a subject plus a body — either a template name with its context, or inline HTML built with the `html` tag (interpolated values are escaped):
+
+```typescript title="src/common/modules/email/verification.mail.ts"
+import { Injectable } from '@nestjs/common';
+import type { Mailable } from '@nestjs/mail';
+
+export interface VerificationMailData {
+  code: string;
+}
+
+@Injectable()
+export class VerificationMail implements Mailable<VerificationMailData> {
+  render({ code }: VerificationMailData) {
+    return {
+      subject: 'Email Verification',
+      template: 'verification', // src/common/modules/email/templates/verification.html
+      context: { code }, // the values the template reads
+    };
+  }
+}
+```
+
+```typescript title="src/common/modules/email/generic.mail.ts"
+import { Injectable } from '@nestjs/common';
+import { html, type Mailable } from '@nestjs/mail';
+
+export interface GenericMailData {
+  subject: string;
+  body: string;
+}
+
+@Injectable()
+export class GenericMail implements Mailable<GenericMailData> {
+  render({ subject, body }: GenericMailData) {
+    return {
+      subject,
+      html: html`<p>${body}</p>`, // ${body} is HTML-escaped
+    };
+  }
+}
+```
+
+A few rules worth knowing:
+
+- **Keep logic in `render()`, not the template.** The template engine is logic-less (values, `#if`/`#unless`, `#each`, partials) with no helpers or expressions. Format prices, build links, and translate strings in TypeScript, where they are typed and tested.
+- **`render()` takes a second argument** with the send's `locale` and the parsed `to` recipients (`render(data, { locale, to })`). The starter does not use locales yet, but a mail class can read `locale` to translate its subject or pick locale-specific formatting.
+- **Mail classes are injectable.** Register them in `EmailModule`'s `providers` so they can inject other providers (a repository, `ConfigService`) when a mail needs more than its `data`.
+- **The `data` type is checked at send time.** `mailer.send(VerificationMail, { to, data })` requires `data: { code: string }` — a wrong shape is a compile error.
+
+`EmailService` is the only caller most code needs. It sends each class through the global `Mailer` and exposes three methods:
 
 ```typescript
 await this.emailService.sendEmail(to, subject, body);
@@ -48,7 +97,7 @@ await this.emailService.sendVerificationEmail(to, code);
 await this.emailService.sendPasswordResetEmail(to, token);
 ```
 
-It logs success and errors. If the mailer throws, the error propagates and the queue processor's retry logic decides whether the job is retried.
+For example, `sendVerificationEmail` calls `mailer.send(VerificationMail, { to, data: { code } })`. The service logs success and errors. If the mailer throws, the error propagates and the queue processor's retry logic decides whether the job is retried.
 
 ## Adding a new mail
 
@@ -73,4 +122,4 @@ const mail = mailbox.assertSent({ to: 'ada@example.com', mail: VerificationMail 
 
 ## Testing locally
 
-With the default `file` transport, no SMTP setup is needed: place an order or register a user and open the `.eml` files in `var/mail` with any mail client. Set `MAIL_TRANSPORT=smtp` with a real `SMTP_URL` (or a test service such as Mailpit, Mailtrap, or Ethereal) when you want real delivery.
+With the default `file` transport, no SMTP setup is needed: register a user or request a password reset and open the `.eml` files in `var/mail` with any mail client. Set `MAIL_TRANSPORT=smtp` with a real `SMTP_URL` (or a test service such as Mailpit, Mailtrap, or Ethereal) when you want real delivery.
