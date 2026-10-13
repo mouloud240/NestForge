@@ -39,11 +39,6 @@ describe('AuthenticationService', () => {
                 maxAge: 86400000,
               },
             },
-            csrf: {
-              secret: 'test-csrf-secret',
-              cookieName: 'psifi.x-csrf-token',
-              secure: false,
-            },
             oauth: { google: {} },
           },
         },

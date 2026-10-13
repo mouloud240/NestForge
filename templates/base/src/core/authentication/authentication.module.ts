@@ -6,12 +6,11 @@ import { UserModule } from '../user/user.module.js';
 import { AuthenticationController } from './v1/authentication.controller.js';
 import { AuthenticationService } from './v1/authentication.service.js';
 import { SessionAuthGuard } from './guards/session.guard.js';
-import { CsrfModule } from '../../common/modules/csrf/csrf.module.js';
 import { OAuthStrategyRegistry } from './oauth/oauth-strategy.registry.js';
 
 @Module({
   // .register provides AuthModuleOptions (required by passport v12 guard DI)
-  imports: [PassportModule.register({}), UserModule, CsrfModule],
+  imports: [PassportModule.register({}), UserModule],
   controllers: [AuthenticationController],
   providers: [
     AuthenticationService,

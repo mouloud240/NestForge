@@ -7,6 +7,7 @@ import mailConfig from './config/mail.config.js';
 import redisConfig from './config/redis.config.js';
 import authConfig from './config/auth.config.js';
 import appConfig from './config/app.config.js';
+import csrfConfig from './config/csrf.config.js';
 import graphqlConfig from './config/graphql.config.js';
 import { InfrastructureModule } from './infrastructure/infrastructure.module.js';
 import { MonitoringModule } from './monitoring/monitoring.module.js';
@@ -24,7 +25,7 @@ import { IDataLoaders } from './common/modules/dataloader/dataloader.interface.j
       isGlobal: true, // Makes the configuration available globally
       // Optional: validationSchema accepts any Standard Schema (e.g. Zod); Joi needs v18+ and validationOptions.libraryOptions
       expandVariables: true,
-      load: [mailConfig, redisConfig, authConfig, appConfig, graphqlConfig],
+      load: [mailConfig, redisConfig, authConfig, appConfig, csrfConfig, graphqlConfig],
     }),
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,

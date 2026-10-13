@@ -34,9 +34,13 @@ Use `@SkipThrottle()` to bypass it for specific routes or controllers.
 
 ## CSRF protection
 
-`main.ts` applies `doubleCsrf` from `csrf-csrf`. It uses the session ID to generate a double-submit cookie token. The client must send the token back in a header or form field for mutating requests.
-
-The cookie name is `__Host-psifi.x-csrf-token`. The current configuration is set for development (`secure: false`). Change this to `secure: true` and `sameSite: 'strict'` or `'lax'` in production.
+`main.ts` calls `app.enableCsrfProtection()` (Nest's built-in Fetch-Metadata
+protection, no tokens or cookies). Same-origin browser requests pass untouched;
+cross-origin state-changing requests must come from an origin listed in the
+`csrf` config, which parses the `CSRF_TRUSTED_ORIGINS` environment variable
+(comma-separated, falls back to `FRONTEND_URL`). Non-browser clients send
+neither `Sec-Fetch-Site` nor `Origin`, so they pass automatically. There are no
+route exclusions by default — login and registration stay protected.
 
 ## Helmet and CORS
 
@@ -65,12 +69,13 @@ Helmet sets security headers including a content security policy. CORS is config
 
 ## Cookie parser
 
-`cookie-parser` is installed and registered in `main.ts` before the session middleware so CSRF protection can read `req.signedCookies`.
+`cookie-parser` is installed and registered in `main.ts` before the session
+middleware so sessions work.
 
 ## Security checklist before production
 
-- Change CSRF `getSecret` to a real secret from the environment.
-- Enable `secure: true` on CSRF and session cookies.
+- Set `CSRF_TRUSTED_ORIGINS` to your production frontend origin(s).
+- Enable `secure: true` on session cookies.
 - Restrict CORS origins to known domains.
 - Review Helmet CSP directives for your frontend assets.
 - Move rate-limiting thresholds to values that match your traffic.

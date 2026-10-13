@@ -11,11 +11,6 @@ export interface AuthConfig {
       maxAge: number;
     };
   };
-  csrf: {
-    secret: string;
-    cookieName: string;
-    secure: boolean;
-  };
   oauth: {
     google: Partial<StrategyOptionsGoogle>;
   };

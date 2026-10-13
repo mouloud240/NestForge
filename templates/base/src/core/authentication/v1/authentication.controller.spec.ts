@@ -5,7 +5,6 @@ import { AuthenticationService } from './authentication.service.js';
 import { UserService } from '../../user/v1/user.service.js';
 import { LocalGuard } from '../guards/local.guard.js';
 import { SessionAuthGuard } from '../guards/session.guard.js';
-import { CsrfService } from '../../../common/modules/csrf/csrf.service.js';
 import { OAuthStrategyRegistry } from '../oauth/oauth-strategy.registry.js';
 
 describe('AuthenticationController', () => {
@@ -19,7 +18,6 @@ describe('AuthenticationController', () => {
       providers: [
         { provide: AuthenticationService, useValue: {} },
         { provide: UserService, useValue: {} },
-        { provide: CsrfService, useValue: { generateToken: vi.fn() } },
         // Eager guard instantiation (Nest 12) needs the registry mock
         {
           provide: OAuthStrategyRegistry,

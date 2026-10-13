@@ -131,4 +131,7 @@ async logout(@Context() ctx: { req: SessionRequest }) {
 
 ## CSRF with GraphQL
 
-GraphQL mutations are POST requests, so they are covered by the CSRF middleware. The client must include the CSRF token header and credentials. `cookie-parser` is installed and registered in `main.ts`, so the CSRF middleware works for both REST POST endpoints and GraphQL mutations.
+GraphQL mutations are POST requests, so they are covered by the native
+Fetch-Metadata CSRF protection. The client only needs `credentials: 'include'` —
+no token header. Cross-origin frontends must be listed in
+`CSRF_TRUSTED_ORIGINS`.

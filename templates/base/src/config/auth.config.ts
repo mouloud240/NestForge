@@ -14,11 +14,6 @@ export default registerAs(
         maxAge: parseInt(process.env.SESSION_COOKIE_MAX_AGE || '86400000', 10),
       },
     },
-    csrf: {
-      secret: process.env.CSRF_SECRET || 'defaultCsrfSecret',
-      cookieName: 'psifi.x-csrf-token',
-      secure: process.env.CSRF_COOKIE_SECURE === 'true',
-    },
     oauth: {
       google: {
         clientID: process.env.GOOGLE_OAUTH_CLIENT_ID,

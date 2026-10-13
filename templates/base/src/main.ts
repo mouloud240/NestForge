@@ -12,8 +12,6 @@ import { HttpExceptionFilter } from './common/filter/httpException.filter.js';
 import { LoggerServiceBuilder } from './monitoring/logger/logger.service.js';
 import { AppClusterService } from './infrastructure/clusters/app.clusterize.js';
 import { createSessionMiddleware } from './core/authentication/session/session.middleware.js';
-import { SessionRequest } from './core/authentication/types/session-request.type.js';
-import { CsrfService } from './common/modules/csrf/csrf.service.js';
 
 async function bootstrap() {
   // the cors will be changed to the front end url  in production environnement
@@ -25,6 +23,15 @@ async function bootstrap() {
     },
     bufferLogs: true, //So nestjs can log things during init
   });
+
+  // Native Fetch-Metadata CSRF protection (Nest v12.1+, no tokens or cookies).
+  // Must be called right after create(), before app.use()/init()/listen().
+  // Same-origin browser requests pass untouched; cross-origin state-changing
+  // requests must come from an origin listed in CSRF_TRUSTED_ORIGINS.
+  // Non-browser clients (no Sec-Fetch-Site/Origin headers) pass automatically.
+  const { trustedOrigins = [] }: { trustedOrigins?: string[] } =
+    app.get(ConfigService).get('csrf') ?? {};
+  app.enableCsrfProtection({ trustedOrigins });
 
   const logger = app.get(LoggerServiceBuilder).build();
   app.useLogger(logger);
@@ -46,28 +53,6 @@ async function bootstrap() {
   app.use(
     createSessionMiddleware(app.get(ConfigService), app.get(RedisService)),
   );
-
-  const csrfService = app.get(CsrfService);
-  const csrfProtection = csrfService.middleware();
-
-  const CSRF_FREE_PATHS = [
-    '/api/v1/authentication/login',
-    '/api/v1/authentication/register',
-    '/api/v1/authentication/oauth/google',
-    '/api/v1/authentication/oauth/google/callback',
-    '/graphql',
-  ];
-
-  app.use((req: SessionRequest, res, next) => {
-    if (
-      CSRF_FREE_PATHS.some(
-        (path) => req.path === path || req.path.startsWith(`${path}/`),
-      )
-    ) {
-      return next();
-    }
-    return csrfProtection(req, res, next);
-  });
 
   app.useGlobalInterceptors(new ResponseFormatterInterceptor());
   app.useGlobalPipes(
@@ -121,17 +106,10 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Core Api Documentation')
     .setDescription(
-      'The API documentation. POST/PUT/PATCH/DELETE requests require a valid CSRF token in the x-csrf-token header. Request one from GET /api/v1/authentication/csrf.',
+      'The API documentation. State-changing requests are protected by Fetch-Metadata CSRF checks: browsers must send them same-origin or from an origin listed in CSRF_TRUSTED_ORIGINS.',
     )
     .setVersion('1.0')
     .addBearerAuth()
-    .addGlobalParameters({
-      name: 'x-csrf-token',
-      in: 'header',
-      description: 'CSRF token obtained from GET /api/v1/authentication/csrf.',
-      required: true,
-      schema: { type: 'string' },
-    })
     .addTag('Core')
     .build();
   const document = SwaggerModule.createDocument(app, config);

@@ -54,9 +54,11 @@ Make sure to include credentials on cross-origin requests so the session cookie 
 fetch('/api/v1/authentication/login', {
   method: 'POST',
   credentials: 'include',
-  headers: { 'Content-Type': 'application/json', 'X-Csrf-Token': csrfToken },
+  headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ email, password }),
 });
 ```
 
-For CSRF-protected POST requests, the client must read the CSRF cookie and send the token back in the `X-Csrf-Token` header (or whatever header name you configure in `csrf-csrf`).
+No CSRF token handling is needed: the browser's `Sec-Fetch-Site`/`Origin`
+headers are checked automatically. Cross-origin frontends must be listed in
+`CSRF_TRUSTED_ORIGINS`.

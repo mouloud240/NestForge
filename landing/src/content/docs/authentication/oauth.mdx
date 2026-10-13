@@ -92,7 +92,8 @@ Passport entirely.
 - `GET /api/v1/authentication/oauth/google/callback` — handles the callback,
   creates a session, and redirects to the frontend.
 
-Both routes are exempt from CSRF in `main.ts`.
+Both routes are `GET` requests, which are always allowed by the native
+Fetch-Metadata CSRF protection, so no exclusion is needed in `main.ts`.
 
 ## CLI integration
 
