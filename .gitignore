@@ -4,6 +4,9 @@ dist/
 node_modules/
 /build
 
+# Ai artifacts
+*.bin
+agent_docs/
 # Logs
 logs
 *.log

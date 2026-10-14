@@ -11,7 +11,7 @@
   <a href="https://github.com/mouloud240/NestForge"><img src="https://img.shields.io/github/stars/mouloud240/NestForge?style=flat-square&logo=github&color=780f20" alt="GitHub stars"></a>
   <a href="LICENSE"><img src="https://img.shields.io/npm/l/create-nestforge?style=flat-square&label=license&color=780f20" alt="License"></a>
   <a href="https://nodejs.org"><img src="https://img.shields.io/badge/node-%3E%3D%2022-780f20?style=flat-square&logo=node.js&logoColor=white" alt="Node.js &gt;= 22"></a>
-  <a href="https://github.com/mouloud240/NestForge"><img src="https://img.shields.io/badge/tests-32%20passing-780f20?style=flat-square&label=tests" alt="Tests passing"></a>
+  <a href="https://github.com/mouloud240/NestForge"><img src="https://img.shields.io/badge/tests-24%20passing-780f20?style=flat-square&label=tests" alt="Tests passing"></a>
   <a href="https://github.com/mouloud240/NestForge"><img src="https://img.shields.io/badge/PRs-welcome-780f20?style=flat-square" alt="PRs welcome"></a>
 </p>
 
@@ -38,16 +38,19 @@ The generated project ships with:
 - **WebSocket gateway** — socket.io gateway with a Redis adapter for
   horizontal scaling and 1-to-1 messaging.
 - **Background jobs** — BullMQ queues for mail and upload processing.
-- **Mailer** — `@nestjs-modules/mailer` with Handlebars templates for
-  verification and password-reset emails.
+- **Mailer** — `@nestjs/mail` with HTML templates and typed `Mailable`
+  classes for verification and password-reset emails. Transport is picked by
+  `MAIL_TRANSPORT` (`file` writes `.eml` files in dev, `smtp` or `resend` for
+  real delivery).
 - **Prod-grade abstractions** — repository pattern (`USER_REPOSITORY` token),
   upload service behind an injectable token, config via `registerAs`, so you
   swap implementations without touching callers.
 - **Testing suite** — Suites-based unit tests (`TestBed.solitary`) with a
-  configured Jest setup.
+  configured Vitest setup.
 - **Docker support** — dev and production Dockerfiles, a `compose.yaml` with
   Redis, Postgres, and a Traefik reverse proxy, plus a PM2 ecosystem file.
-- **Security baseline** — Helmet, CSRF double-submit cookies, global rate
+- **Security baseline** — Helmet, native Fetch-Metadata CSRF protection
+  (`app.enableCsrfProtection()` with `CSRF_TRUSTED_ORIGINS`), global rate
   limiting with Redis-backed storage.
 - **Observability** — Swagger/Scalar docs at `/api-docs`, Terminus health
   checks, Winston logging with request context.
@@ -150,7 +153,10 @@ pnpm lint
   and import `QueueModule` where it is needed instead.
 - The GraphQL variant mounts `/graphql` (Apollo Sandbox in development) and
   keeps the full REST API.
-- CSRF protection is enabled globally; cookie-parser is installed and registered in `main.ts`.
+- CSRF protection uses Nest's native Fetch-Metadata protection
+  (`app.enableCsrfProtection()` in `main.ts`, no tokens or cookies).
+  Cross-origin state-changing requests must come from `CSRF_TRUSTED_ORIGINS`
+  (falls back to `FRONTEND_URL`); cookie-parser stays registered for sessions.
 
 ## License
 
